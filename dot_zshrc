@@ -15,12 +15,13 @@ zstyle ':omz:update' frequency 15
 HIST_STAMPS="dd/mm/yyyy"
 
 # Use custom Keybindings for fzf
-export DISABLE_FZF_KEY_BINDINGS="true"
+bindkey -r '^R'  # Unbind Ctrl + R (fzf-history-widget)
+bindkey -r '^T'  # Unbind Ctrl + T (fzf-file-widget)
+bindkey -r '^[c' # Unbind Alt + C (fzf-cd-widget)
 
 # Keybindings for fzf
-bindkey '^F' fzf-file-widget
-bindkey '^H' fzf-history-widget
-bindkey '^D' fzf-cd-widget
+bindkey '^F' fzf-file-widget # Bind Ctrl + F to search for files
+bindkey '^H' fzf-history-widget # Bind Ctrl + H to search for command history
 
 plugins=(git zoxide zsh-syntax-highlighting zsh-autosuggestions eza docker fzf zsh-bat)
 ZOXIDE_CMD_OVERRIDE=cd
