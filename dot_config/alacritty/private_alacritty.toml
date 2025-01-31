@@ -1,0 +1,31 @@
+[env]
+TERM = "xterm-256color"
+
+[window]
+padding.x = 8
+padding.y = 19
+dynamic_padding = true
+
+opacity = 0.9
+blur = true
+
+decorations = "Transparent"
+dynamic_title = false
+
+[font]
+normal.family = "MesloLGL Nerd Font Mono"
+size = 13
+
+[cursor.style]
+shape = "Block"
+blinking = "On"
+
+[general]
+import = [
+  "~/.config/alacritty/materialdarker.toml"
+]
+
+live_config_reload = true
+
+[mouse]
+hide_when_typing = true

@@ -1,0 +1,15 @@
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[user]
+	name = Miguel Raposo
+	email = migpovrap@hotmail.com
+	signingkey = {{ onepasswordRead "op://Personal/GPGKey/signingkey" }}
+[gpg]
+	program = /opt/homebrew/bin/gpg
+	format = openpgp
+[commit]
+	gpgsign = true
+
