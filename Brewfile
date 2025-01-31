@@ -1,5 +1,6 @@
 tap "homebrew/bundle"
 
+brew "bat"
 brew "chezmoi"
 brew "clang-format"
 brew "coreutils"
