@@ -35,6 +35,7 @@ setopt hist_ignore_dups
 setopt hist_verify
 
 # Keybindings for fzf
+export DISABLE_FZF_KEY_BINDINGS="true"
 bindkey '^F' fzf-file-widget
 bindkey '^[^F' fzf-history-widget  # Shift + Ctrl + F
 bindkey '^@^F' fzf-cd-widget  # Ctrl + Cmd + F
