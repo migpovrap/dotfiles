@@ -37,8 +37,8 @@ setopt hist_verify
 # Keybindings for fzf
 export DISABLE_FZF_KEY_BINDINGS="true"
 bindkey '^F' fzf-file-widget
-bindkey '^[^F' fzf-history-widget  # Shift + Ctrl + F
-bindkey '^@^F' fzf-cd-widget  # Ctrl + Cmd + F
+bindkey '^H' fzf-history-widget  # Shift + Ctrl + F
+bindkey '^D' fzf-cd-widget  # Ctrl + Cmd + F
 
 # completion using arrow keys (based on history)
 bindkey '^[[A' history-search-backward
