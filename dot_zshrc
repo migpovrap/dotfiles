@@ -14,7 +14,7 @@ zstyle ':omz:update' frequency 15
 
 HIST_STAMPS="dd/mm/yyyy"
 
-plugins=(git zoxide zsh-syntax-highlighting zsh-autosuggestions eza docker fzf)
+plugins=(git zoxide zsh-syntax-highlighting zsh-autosuggestions eza docker fzf zsh-bat)
 ZOXIDE_CMD_OVERRIDE=cd
 source $ZSH/oh-my-zsh.sh
 
