@@ -28,6 +28,7 @@ brew "stow"
 brew "tmux"
 brew "tree"
 brew "zoxide"
+brew "yazi"
 
 cask "1password"
 cask "1password-cli"
