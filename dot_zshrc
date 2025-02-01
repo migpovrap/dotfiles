@@ -11,10 +11,11 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 zstyle ':completion:*:*:docker:*' option-stacking yes
 zstyle ':completion:*:*:docker-*:*' option-stacking yes
 zstyle ':omz:update' frequency 15
+zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup # Use tmux popup for fzf-tab 
 
 HIST_STAMPS="dd/mm/yyyy"
 
-plugins=(git zoxide zsh-syntax-highlighting zsh-autosuggestions eza docker fzf zsh-bat)
+plugins=(git zoxide zsh-syntax-highlighting zsh-autosuggestions eza docker fzf zsh-bat fzf-tab)
 ZOXIDE_CMD_OVERRIDE=cd
 source $ZSH/oh-my-zsh.sh
 
@@ -42,6 +43,16 @@ bindkey -r '^[c' # Unbind Alt + C (fzf-cd-widget)
 # Keybindings for fzf
 bindkey '^F' fzf-file-widget # Bind Ctrl + F to search for files
 bindkey '^H' fzf-history-widget # Bind Ctrl + H to search for command history
+
+# Set FZF to use bat for preview
+export FZF_DEFAULT_OPTS="--preview 'bat --style=full --theme=OneHalfDark --line-range :500 {}'"
+
+# Make bat the default reader for man pages
+export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+
+# Bat config location
+export BAT_CONFIG_PATH="$HOME/.config/bat/bat.conf"
+export BAT_CONFIG_DIR="$HOME/.config/bat"
 
 # completion using arrow keys (based on history)
 bindkey '^[[A' history-search-backward
