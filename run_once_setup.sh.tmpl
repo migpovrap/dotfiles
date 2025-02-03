@@ -1,0 +1,83 @@
+#!/bin/bash
+# MacOS System configuration
+
+defaults write com.apple.dock "orientation" -string "left" && killall Dock
+defaults write com.apple.dock "tilesize" -int "35 " && killall Dock
+defaults write com.apple.dock "magnification" -int "1" && killall Dock
+defaults write com.apple.dock "autohide" -bool "true" && killall Dock
+defaults write com.apple.dock "show-recents" -bool "false" && killall Dock
+defaults write com.apple.dock "mineffect" -string "scale" && killall dock
+defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true" && killall Finder
+defaults write com.apple.finder "AppleShowAllFiles" -bool "true" && killall finder
+defaults write com.apple.finder "ShowPathbar" -bool "true" && killall finder
+defaults write com.apple.finder "FXPreferredViewStyle" -string "Nlsv" && killall finder
+defaults write com.apple.finder "FXDefaultSearchScope" -string "SCcf" && killall finder
+defaults write com.apple.finder "FXEnableExtensionChangeWarning" -bool "false" && killall finder
+defaults write com.apple.finder "ShowHardDrivesOnDesktop" -bool "true" && killall finder
+defaults write com.apple.finder "ShowRemovableMediaOnDesktop" -bool "false" && killall finder
+defaults write com.apple.finder "ShowMountedServersOnDesktop" -bool "true" && killall finder
+defaults write com.apple.menuextra.clock "ShowAMPM" -bool "false" && killall SystemUIServer
+defaults write com.apple.menuextra.clock "ShowDate" -bool "true" && killall SystemUIServer
+defaults write com.apple.menuextra.clock "ShowDayOfWeek" -bool "true" && killall SystemUIServer
+defaults write com.apple.menuextra.clock "ShowSeconds" -bool "true" && killall SystemUIServer
+defaults write com.apple.AppleMultitouchTrackpad "Clicking" -bool "true"
+defaults write com.apple.desktopservices DSDontWriteNetworkStores true
+
+# Install all apps using homebrew
+brew bundle --file=$(chezmoi source-path)/Brewfile
+
+# Remove Message of the day prompt
+touch $HOME/.hushlogin
+
+# Install all things from github
+
+# Install oh my zsh 
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
+# Install zsh-autosuggestions and zsh-syntax-highlighting
+if [ ! -d "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ]; then
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+fi
+
+if [ ! -d "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ]; then
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+fi
+
+# Install bat-zsh
+if [ ! -d "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-bat" ]; then
+  git clone https://github.com/fdellwing/zsh-bat.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-bat
+fi
+
+# install fzf-tab
+if [ ! -d "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab" ]; then
+  git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
+fi
+
+# Install OneDark theme for Yazi
+if [ ! -d "$HOME/.config/yazi/flavors/onedark.yazi" ]; then
+  git clone https://github.com/BennyOe/onedark.yazi.git ~/.config/yazi/flavors/onedark.yazi
+fi
+
+# Install Bat plugin for yazi
+if [ ! -d "$HOME/.config/yazi/plugins/bat.yazi" ]; then
+  git clone https://github.com/mgumz/yazi-plugin-bat.git ~/.config/yazi/plugins/bat.yazi
+fi
+
+# Install fg plugin for yazi
+if [ ! -d "$HOME/.config/yazi/plugins/fg.yazi" ]; then
+  git clone https://github.com/DreamMaoMao/fg.yazi.git ~/.config/yazi/plugins/fg.yazi
+  mv ~/.config/yazi/plugins/fg.yazi/main.lua ~/.config/yazi/plugins/fg.yazi/init.lua
+fi
+
+# Install node version manager
+if [ ! -d "$NVM_DIR" ]; then
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+fi
+
+# Install Tmux tmp plugin manager
+if [ ! -d "$HOME/.config/tmux/plugins/tpm" ]; then
+  git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm/
+fi
+

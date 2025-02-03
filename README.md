@@ -43,6 +43,8 @@ It contains configurations for:
   | `Ctrl + Space`        | Prefix key |
   | `Prefix + n`     | Open a new window |
   | `Prefix + w`     | Close the current window |
+  | `Prefix + o`     | Open sessionx manager |
+  | `Prefix + I`     | Reaload Tmux Enviroment |
   | `Shift + Alt + Left`       | Switch to the previous window |
   | `Shift + Alt + Right`      | Switch to the next window |
   | `Prefix + -`     | Split window vertically |
@@ -97,20 +99,7 @@ It contains configurations for:
   | `<Esc>`          | Exit visual mode, clear selected, or cancel search |
   | `q`              | Quit
 
-  **Navigation**
-  | Keybinding       | Action |
-  |------------------|--------|
-  | `k`              | Move cursor up |
-  | `j`              | Move cursor down |
-  | `h`              | Go back to the parent directory |
-  | `l`              | Enter the child directory |
 
-  **Selection**
-  | Keybinding       | Action |
-  |------------------|--------|
-  | `<Space>`        | Toggle the current selection state |
-  | `<C-a>`          | Select all files |
-  | `<C-r>`          | Invert selection of all files |
 
   **Operations**
   | Keybinding       | Action |
@@ -125,19 +114,11 @@ It contains configurations for:
   | `s`              | Search files by content via ripgrep |
   | `z`              | Jump to a directory via zoxide |
   | `Z`              | Jump to a file/directory via fzf |
-  | `f`              | Search the current directory for a file name |
-
-  **Tabs**
-  | Keybinding       | Action |
-  |------------------|--------|
-  | `t`              | Create a new tab with CWD |
-  | `1` to `9`       | Switch to the nth tab |
-  | `[`              | Switch to the previous tab |
-  | `]`              | Switch to the next tab |
+  | `f`              | Search the current directory using fzf(`f`) and ripgrep(`g`) |
 
   **Help**
   | Keybinding       | Action |
   |------------------|--------|
-  | `<F1>`           | Open help |
+  | `<F1>`           | Open help with shortcuts cheatsheet |
 
 </details>

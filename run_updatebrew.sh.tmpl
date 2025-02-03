@@ -1,5 +1,5 @@
 #!/bin/bash
-brew bundle --cleanup
+brew bundle --file={{ .chezmoi.sourceDir }}/Brewfile --cleanup
 brew update
 brew upgrade
 

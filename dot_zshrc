@@ -54,6 +54,9 @@ export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p
 export BAT_CONFIG_PATH="$HOME/.config/bat/bat.conf"
 export BAT_CONFIG_DIR="$HOME/.config/bat"
 
+# Set env variable for Pinentry 1password integration
+export OP_PIN_ITEM="op://Personal/GPGKey/password"
+
 # completion using arrow keys (based on history)
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
