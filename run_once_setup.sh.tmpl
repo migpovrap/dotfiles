@@ -24,7 +24,7 @@ defaults write com.apple.AppleMultitouchTrackpad "Clicking" -bool "true"
 defaults write com.apple.desktopservices DSDontWriteNetworkStores true
 
 # Install all apps using homebrew
-brew bundle --file=$(chezmoi source-path)/Brewfile
+brew bundle --file={{ .chezmoi.sourceDir }}/Brewfile 
 
 # Remove Message of the day prompt
 touch $HOME/.hushlogin
