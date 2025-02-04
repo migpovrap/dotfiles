@@ -84,9 +84,10 @@ require("onedarkpro").setup({ --Change theme config
 vim.cmd("colorscheme onedark")
 
 -- Lualine configuration
+local onedarkpro_lua = require("lualine.onedark")
 require('lualine').setup {
   options = {
-    theme = 'auto',
+    theme = onedarkpro_lua,
     section_separators = { left = '', right = '' }, -- Round borders
     component_separators = { left = '', right = '' } -- Round borders
   },

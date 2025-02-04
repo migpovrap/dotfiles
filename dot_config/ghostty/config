@@ -1,11 +1,11 @@
 font-family = "MesloLGL Nerd Font Mono"
 font-size = 13
 theme = "MaterialDarker"
-background-opacity = 0.9
+background-opacity = 0.97
 background-blur = true
 title = " "
 term = "xterm-256color"
-cursor-style = "block"
+cursor-style = "bar"
 cursor-style-blink = true
 window-padding-x = 8
 window-padding-y = 12

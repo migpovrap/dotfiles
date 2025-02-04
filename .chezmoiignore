@@ -3,4 +3,5 @@ README.md
 .oh-my-zsh/cache/
 setup.sh
 Brewfile
+.gitignore
 
