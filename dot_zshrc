@@ -43,12 +43,15 @@ bindkey -r '^[c' # Unbind Alt + C (fzf-cd-widget)
 # Keybindings for fzf
 bindkey '^F' fzf-file-widget # Bind Ctrl + F to search for files
 bindkey '^H' fzf-history-widget # Bind Ctrl + H to search for command history
+bindkey '^T' fzf-cd-widget # Bind Ctrl + T to search for directories
 
 # Set FZF to use bat for preview
-export FZF_DEFAULT_OPTS="--preview 'bat --style=full --theme=OneHalfDark --line-range :500 {}'"
+export FZF_DEFAULT_OPTS="--no-preview" # Remove preview by default for history search
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=full --theme=OneHalfDark -n --line-range :500 {}'"
+export FZF_ALT_C_OPTS="--preview 'eza --icons=always --tree --color=always {} | head -200'"
 
-# Make bat the default reader for man pages
-export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+# Make Neovim the default reader for man pages
+export MANPAGER='nvim +Man!'
 
 # Bat config location
 export BAT_CONFIG_PATH="$HOME/.config/bat/bat.conf"
@@ -56,6 +59,9 @@ export BAT_CONFIG_DIR="$HOME/.config/bat"
 
 # Set env variable for Pinentry 1password integration
 export OP_PIN_ITEM="op://Personal/GPGKey/password"
+
+# Set env variable for LazyGit config
+export LG_CONFIG_FILE="$HOME/.config/lazygit/onedarkpro.yml"
 
 # completion using arrow keys (based on history)
 bindkey '^[[A' history-search-backward
