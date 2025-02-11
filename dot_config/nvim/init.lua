@@ -231,7 +231,7 @@ vim.api.nvim_create_autocmd({ "FileChangedShellPost" }, {
 -- LSP Config
 require("mason").setup()
 require("mason-lspconfig").setup({
-  ensure_installed = { "lua_ls", "clangd", "jdtls", "pyright" }
+  ensure_installed = { "lua_ls", "clangd", "jdtls", "pyright", "tailwindcss", "ts_ls", "cssls", "html" },
 })
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -246,6 +246,18 @@ require("lspconfig").jdtls.setup {
   capabilities = capabilities
 }
 require("lspconfig").pyright.setup {
+  capabilities = capabilities
+}
+require("lspconfig").tailwindcss.setup {
+  capabilities = capabilities
+}
+require'lspconfig'.ts_ls.setup {
+  capabilities = capabilities
+}
+require'lspconfig'.cssls.setup {
+  capabilities = capabilities
+}
+require'lspconfig'.html.setup {
   capabilities = capabilities
 }
 
@@ -337,7 +349,7 @@ vim.cmd [[
 -- Setup nvim-treesitter
 require 'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the listed parsers MUST always be installed)
-  ensure_installed = { "c", "cpp", "python", "java", "yaml", "markdown", "markdown_inline", "lua", "rust", "sql", "vim", "vimdoc" },
+  ensure_installed = { "c", "cpp", "python", "java", "yaml", "markdown", "markdown_inline", "lua", "rust", "sql", "vim", "vimdoc", "swift", "typescript", "javascript", "json", "html", "css", "scss", "bash", "dockerfile", "regex", "toml" },
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
 
