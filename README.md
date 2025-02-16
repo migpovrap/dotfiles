@@ -1,6 +1,7 @@
-# DotFiles
+# Miguel's dotFiles
 
-This repository contains the configuration files that I use in macOS, it's managed using chezmoi and some simple custom scripts, all of the private information and keys that are typically stored in this files. Those are stored in 1Password using the integration provided by chezmoi.
+The repository contains the configuration files that I use in macOS, it's managed using chezmoi and some custom scripts, all of the private information and keys that are typically stored in this files are stored in 1Password using the integration provided by chezmoi.
+A cron job is used to keep brew updated and keep in sync with the formulas and casks that are listed in the Brewfile. The sricpts are used to automate the backup and restore of gpg keys, using 1Password cli, and encrypt and decrypt files stored in Google Drive or other non local storage.
 
 It contains configurations for:
 - NeoVim
@@ -16,6 +17,10 @@ It contains configurations for:
 - In the future maybe more??
 
 ## Installation
+**Warning:** This are my personal macOS dotfiles and configurations, it's not intended to be used as is, because it is tailored to my personal use case, but feel free to fork it and modify it to your needs or use it as a reference.
+The one line setup sript is intended to be use by me to setup a new machine, or mine after a factory reset. It assumes that you will have the secret keys and ssh keys in 1Password, also that some files are stored in specific locations on the machine and Google Drive.
+After all of this if you still want to use it, you shoudl fork it and review all the code and modified it for your needs and preferences.
+
 **One line setup**
 ```shell
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/migpovrap/dotfiles/main/setup.sh)"
@@ -122,3 +127,11 @@ It contains configurations for:
   | `<F1>`           | Open help with shortcuts cheatsheet |
 
 </details>
+
+### Future improvements
+- [ ] Finish the script to encrypt and decrypt files stored in Google Drive.
+- [ ] Use chezmoi and it's integration with 1Password to store to store gnupg keys.
+- [ ] Use Cmd key on Nvim instead of Ctrl.
+- [ ] Add more shortcuts to the cheatsheet.
+- [ ] Write a better README.md with instructions on how to customize this for personal use.
+
