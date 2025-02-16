@@ -24,7 +24,7 @@ defaults write com.apple.AppleMultitouchTrackpad "Clicking" -bool "true"
 defaults write com.apple.desktopservices DSDontWriteNetworkStores true
 
 # Install all apps using homebrew
-brew bundle --file={{ .chezmoi.sourceDir }}/Brewfile 
+brew bundle --file={{ .chezmoi.sourceDir }}/../Brewfile 
 
 # Remove Message of the day prompt
 touch $HOME/.hushlogin
@@ -81,3 +81,7 @@ if [ ! -d "$HOME/.config/tmux/plugins/tpm" ]; then
   git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm/
 fi
 
+(crontab -l 2>/dev/null; echo "0 2 * * * /bin/bash -l -c 'brew update && brew upgrade && brew cleanup'") | crontab -
+brew update
+brew bundle --file={{ .chezmoi.sourceDir }}/../Brewfile
+brew upgrade

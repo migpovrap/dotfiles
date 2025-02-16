@@ -77,6 +77,10 @@ eval "$(pyenv init - zsh)"
 alias gcc='gcc-14'
 alias g++='g++-14'
 
+# Backup and Restore GPG keys to 1pasword
+alias backup='bash "$HOME/.local/share/chezmoi/backup.sh"'
+alias restore='bash "$HOME/.local/share/chezmoi/restore.sh"'
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
