@@ -14,6 +14,8 @@ A cron job is used to keep brew updated and keep in sync with the formulas and c
 - `home/`: Chezmoi home directory
 - `pinentry_op.sh`: Script to use 1Password to autofill the gpg key password.
 - `drive_gpg.py`: Python app to facilitate the use of GPG for encrypting sensitive files.
+- `importRaycast.scpt`: Restore Raycast settings from iCloud using Apple script.
+- `exportRaycast.scpt`: Backup Raycast settings to iCloud using Apple script.
 
 - Config for:
   - Neovim
@@ -32,7 +34,7 @@ A cron job is used to keep brew updated and keep in sync with the formulas and c
 > [!WARNING]
 > This are my personal macOS dotfiles and configurations, it's not intended to be used as is, because it's tailored to my personal use case, but feel free to fork it and modify it to your needs or use it as a reference.
 The one line setup sript is intended to be use by me to setup a new machine, or mine after a factory reset. It assumes that you will have the secret keys and ssh keys in 1Password, also that some files are stored in specific locations on the machine and Google Drive.
-After all of this if you still want to use it, you shoudl fork it and review all the code and modified it for your needs and preferences.
+After all of this if you still want to use it, you should fork it and review all the code and modified it for your needs and preferences.
 
 **One line setup**
 ```shell
@@ -144,11 +146,8 @@ After all of this if you still want to use it, you shoudl fork it and review all
 -----------
 
 ### Future improvements
-- [X] Use op cli to store and restore gnupg keys.
-- [X] Finish the script to encrypt and decrypt files stored in Google Drive.
 - [ ] Use Cmd key on Nvim instead of Ctrl.
 - [ ] Add more shortcuts to the cheatsheet.
-- [ ] Auto restore raycast backup using apple script
 - [ ] Find defaults setting for display, True tone and dock apps layout, app notifications, disable window manager.
 
 

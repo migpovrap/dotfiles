@@ -33,11 +33,10 @@ else
   echo "GPG directory is not empty. Skipping restoration."
 fi
 
-echo "Restore launhpad layout from iCloud"
-lporg save --icloud
+echo "Restore launchpad layout from iCloud"
+lporg load --icloud
 
-
-echo "Restoring app perferences..."
+echo "Restoring app preferences..."
 for app in "com.surteesstudios.Bartender" "com.lwouis.alt-tab-macos" "com.knollsoft.Rectangle" "pl.maketheweb.cleanshotx" "com.if.Amphetamine" "com.raycast.macos"; do
   APP_PID=$(pgrep -f "$app")
   if [ -n "$APP_PID" ]; then
@@ -51,3 +50,7 @@ defaults import com.knollsoft.Rectangle ../plists/rectangle.plist
 defaults import pl.maketheweb.cleanshotx ../plists/cleanshotx.plist
 defaults import com.if.Amphetamine ../plists/amphetamine.plist
 defaults import com.raycast.macos ../plists/raycast.plist
+
+# Retrieve password from 1Password and pass it as an argument
+PASSWORD=$(op item get "Vercel" --fields label=password)
+osascript ../importRaycast.scpt "$PASSWORD"

@@ -36,11 +36,11 @@ echo "Backup stored securely in 1Password."
 rm -rf "$TMP_DIR"
 
 # Update Brewfile
-BrewfilePath="~/.local/share/chezmoi/Brewfile"
-brew bundle dump --file="$BrewfilePath" --force
+BrewfilePath="~/.local/share/chezmoi/Brewfile" &>/dev/null
+brew bundle dump --file="$BrewfilePath" --force &>/dev/null
 
 echo "Saving launchpad layout to iCloud"
-lporg save --icloud
+lporg save --icloud &>/dev/null
 
 # Backup apps preferences
 echo "Backing up apps preferences..."
@@ -51,4 +51,4 @@ defaults export pl.maketheweb.cleanshotx ../plists/cleanshotx.plist
 defaults export com.if.Amphetamine ../plists/amphetamine.plist
 defaults export com.raycast.macos ../plists/raycast.plist
 
-osascript ./exportRaycast.scpt
+osascript ../exportRaycast.scpt

@@ -19,7 +19,7 @@ defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 "{ena
 # Dock
 defaults write com.apple.dock "orientation" -string "left"                                                                # set dock to left
 defaults write com.apple.dock "tilesize" -int "35 "                                                                       # set dock icon size
-defaults write com.apple.dock "magnification" -int "1"                                                                    # enable dock magnification
+defaults write com.apple.dock "magnification" -bool "true"                                                                    # enable dock magnification
 defaults write com.apple.dock "autohide" -bool "true"                                                                     # enable dock autohide
 defaults write com.apple.dock "show-recents" -bool "false"                                                                # disable recents on dock
 defaults write com.apple.dock "mineffect" -string "scale"                                                                 # set dock magnification effect
@@ -45,7 +45,6 @@ defaults write com.apple.menuextra.clock "ShowDayOfWeek" -bool "true"           
 defaults write com.apple.menuextra.clock "ShowSeconds" -bool "true"                                                       # enable seconds on the menubar clock
 
 # Time and Date settings
-defaults write NSGlobalDomain AppleLocale -string "en_US@rg=ptzzzz"                                                       # set country as Portugal and USA
 defaults write NSGlobalDomain AppleICUForce24HourTime -bool true                                                          # 24-hour time format
 defaults write com.apple.menuextra.clock "ShowAMPM" -bool "false"                                                         # remove AM/PM from time display
 defaults write NSGlobalDomain AppleFirstWeekday -dict gregorian 2                                                         # set Monday as first weekday
