@@ -35,3 +35,19 @@ fi
 
 echo "Restore launhpad layout from iCloud"
 lporg save --icloud
+
+
+echo "Restoring app perferences..."
+for app in "com.surteesstudios.Bartender" "com.lwouis.alt-tab-macos" "com.knollsoft.Rectangle" "pl.maketheweb.cleanshotx" "com.if.Amphetamine" "com.raycast.macos"; do
+  APP_PID=$(pgrep -f "$app")
+  if [ -n "$APP_PID" ]; then
+    kill "$APP_PID"
+  fi
+done
+
+defaults import com.surteesstudios.Bartender ../plists/bartender5.plist
+defaults import com.lwouis.alt-tab-macos ../plists/alttab.plist
+defaults import com.knollsoft.Rectangle ../plists/rectangle.plist
+defaults import pl.maketheweb.cleanshotx ../plists/cleanshotx.plist
+defaults import com.if.Amphetamine ../plists/amphetamine.plist
+defaults import com.raycast.macos ../plists/raycast.plist

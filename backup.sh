@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
-
+# Change to the chezmoi directory
+cd "$(chezmoi source-path)"
 # Ensure the user is authenticated in 1Password
 eval $(op signin)
-
 # Temporary directory
 TMP_DIR=$(mktemp -d)
 echo "Saving GPG keys to $TMP_DIR"
@@ -35,6 +35,20 @@ update_or_create "GPG TrustDB" "$TMP_DIR/trust.txt"
 echo "Backup stored securely in 1Password."
 rm -rf "$TMP_DIR"
 
+# Update Brewfile
+BrewfilePath="~/.local/share/chezmoi/Brewfile"
+brew bundle dump --file="$BrewfilePath" --force
+
 echo "Saving launchpad layout to iCloud"
 lporg save --icloud
 
+# Backup apps preferences
+echo "Backing up apps preferences..."
+defaults export com.surteesstudios.Bartender ../plists/bartender5.plist
+defaults export com.lwouis.alt-tab-macos ../plists/alttab.plist
+defaults export com.knollsoft.Rectangle ../plists/rectangle.plist
+defaults export pl.maketheweb.cleanshotx ../plists/cleanshotx.plist
+defaults export com.if.Amphetamine ../plists/amphetamine.plist
+defaults export com.raycast.macos ../plists/raycast.plist
+
+osascript ./exportRaycast.scpt

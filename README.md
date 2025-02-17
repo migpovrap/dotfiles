@@ -4,19 +4,28 @@ The repository contains the configuration files that I use in macOS, it's manage
 A cron job is used to keep brew updated and keep in sync with the formulas and casks that are listed in the Brewfile. The sricpts are used to automate the backup and restore of gpg keys, using 1Password cli, and encrypt and decrypt files stored in Google Drive or other non local storage.
 
 
-**It contains configurations for:**
+## Contents:
 
-- NeoVim
-- iTerm2
-- tmux
-- Alacritty
-- Zed
-- LinearMouse
-- Git
-- ZsH using Oh-My-ZsH
-- Brew
-- macOS custom settings
-- In the future maybe more??
+- `setup.sh`: One line setup script to configure a new machine.
+- `backup.sh`: Script to backup GPG keys and app preferences, and save them to 1Password and iCloud.
+- `exportRaycastPreferences.scpt`: AppleScript to export Raycast preferences and save them to iCloud.
+- `Brewfile`: List of Homebrew formulas and casks that I want to be installed.
+- `plists/`: Directory containing app preference files in plist format.
+- `home/`: Chezmoi home directory
+- `pinentry_op.sh`: Script to use 1Password to autofill the gpg key password.
+- `drive_gpg.py`: Python app to facilitate the use of GPG for encrypting sensitive files.
+
+- Config for:
+  - Neovim
+  - Tmux
+  - iTerm2
+  - Alacritty
+  - Ghostty
+  - bat
+  - fzf
+  - yazi
+  - zed
+  - zsh using oh-my-zsh
 
 ## Installation
 
@@ -137,10 +146,9 @@ After all of this if you still want to use it, you shoudl fork it and review all
 ### Future improvements
 - [X] Use op cli to store and restore gnupg keys.
 - [X] Finish the script to encrypt and decrypt files stored in Google Drive.
-- [ ] Use chezmoi and it's integration with 1Password to store to store gnupg keys.
 - [ ] Use Cmd key on Nvim instead of Ctrl.
 - [ ] Add more shortcuts to the cheatsheet.
-- [ ] Write a better README.md with instructions on how to customize this for personal use.
+- [ ] Auto restore raycast backup using apple script
 - [ ] Find defaults setting for display, True tone and dock apps layout, app notifications, disable window manager.
 
 
