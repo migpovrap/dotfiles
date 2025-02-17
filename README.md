@@ -136,9 +136,16 @@ After all of this if you still want to use it, you shoudl fork it and review all
 
 ### Future improvements
 - [X] Use op cli to store and restore gnupg keys.
-- [ ] Finish the script to encrypt and decrypt files stored in Google Drive.
+- [X] Finish the script to encrypt and decrypt files stored in Google Drive.
 - [ ] Use chezmoi and it's integration with 1Password to store to store gnupg keys.
 - [ ] Use Cmd key on Nvim instead of Ctrl.
 - [ ] Add more shortcuts to the cheatsheet.
 - [ ] Write a better README.md with instructions on how to customize this for personal use.
+- [ ] Find defaults setting for display, True tone and dock apps layout, app notifications, disable window manager.
 
+
+## Acknowledgements
+- [Mathias Bynens](https://mathiasbynens.be/) and [Kevin Suttle](https://kevinsuttle.com/) for their macOS defaults [repositories](https://github.com/kevinSuttle/MacOS-Defaults).
+- [Yann Bertrand](https://yann-bertrand.fr/) for his macOS defaults list and tools [repository](https://github.com/yannbertrand/macos-defaults).
+- [Blacktop](https://blog.blacktop.io) for his amazing tool to manage the lauchpad layout, [lporg](https://github.com/blacktop/lporg). 
+- [Inês Costa](https://github.com/inesiscosta) for her dotfiles repository, used as inspiration for some scripts and organization.

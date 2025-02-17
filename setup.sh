@@ -12,6 +12,10 @@ else
 fi
 
 brew install chezmoi
+brew install --cask 1password 1password-cli
+
+echo "Sign in to 1Password desktop, set up the op cli also open the App Store, and ensure iCloud is correctly configured."
+read -p "Press Enter to continue."
 
 chezmoi init --apply migpovrap
 

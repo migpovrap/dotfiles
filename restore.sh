@@ -32,3 +32,6 @@ if [ ! -d "$HOME/.gnupg" ] || [ -z "$(ls -A $HOME/.gnupg)" ]; then
 else
   echo "GPG directory is not empty. Skipping restoration."
 fi
+
+echo "Restore launhpad layout from iCloud"
+lporg save --icloud

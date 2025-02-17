@@ -1,4 +1,5 @@
 tap "homebrew/bundle"
+tap  "blacktop/tap/lporg"
 
 brew "bat"
 brew "chezmoi"

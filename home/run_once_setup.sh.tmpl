@@ -1,30 +1,92 @@
 #!/bin/bash
+sudo -v                                                                                                                   # asks for sudo password upfront
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &                                           # keep alive: update sudo time stamp until the script has finished
+set -e                                                                                                                    # Ensure the script fails if any command fails
+
 # MacOS System configuration
 
-defaults write com.apple.dock "orientation" -string "left" && killall Dock
-defaults write com.apple.dock "tilesize" -int "35 " && killall Dock
-defaults write com.apple.dock "magnification" -int "1" && killall Dock
-defaults write com.apple.dock "autohide" -bool "true" && killall Dock
-defaults write com.apple.dock "show-recents" -bool "false" && killall Dock
-defaults write com.apple.dock "mineffect" -string "scale" && killall dock
-defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true" && killall Finder
-defaults write com.apple.finder "AppleShowAllFiles" -bool "true" && killall finder
-defaults write com.apple.finder "ShowPathbar" -bool "true" && killall finder
-defaults write com.apple.finder "FXPreferredViewStyle" -string "Nlsv" && killall finder
-defaults write com.apple.finder "FXDefaultSearchScope" -string "SCcf" && killall finder
-defaults write com.apple.finder "FXEnableExtensionChangeWarning" -bool "false" && killall finder
-defaults write com.apple.finder "ShowHardDrivesOnDesktop" -bool "true" && killall finder
-defaults write com.apple.finder "ShowRemovableMediaOnDesktop" -bool "false" && killall finder
-defaults write com.apple.finder "ShowMountedServersOnDesktop" -bool "true" && killall finder
-defaults write com.apple.menuextra.clock "ShowAMPM" -bool "false" && killall SystemUIServer
-defaults write com.apple.menuextra.clock "ShowDate" -bool "true" && killall SystemUIServer
-defaults write com.apple.menuextra.clock "ShowDayOfWeek" -bool "true" && killall SystemUIServer
-defaults write com.apple.menuextra.clock "ShowSeconds" -bool "true" && killall SystemUIServer
-defaults write com.apple.AppleMultitouchTrackpad "Clicking" -bool "true"
-defaults write com.apple.desktopservices DSDontWriteNetworkStores true
+# General settings
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on                                                  # turn on firewall
+sudo scutil --set ComputerName "Miguel's MacBook Pro"                                                                     # change computer name
+sudo scutil --set HostName "Miguel's MacBook Pro"                                                                         # change host name
+sudo scutil --set LocalHostName "miguelraposo-macbookpro"                                                                 # change local host name
+defaults write com.apple.CloudSubscriptionFeatures.optIn "545129924" -bool "false"                                        # disable apple inteligence
+
+# Dock
+defaults write com.apple.dock "orientation" -string "left"                                                                # set dock to left
+defaults write com.apple.dock "tilesize" -int "35 "                                                                       # set dock icon size
+defaults write com.apple.dock "magnification" -int "1"                                                                    # enable dock magnification
+defaults write com.apple.dock "autohide" -bool "true"                                                                     # enable dock autohide
+defaults write com.apple.dock "show-recents" -bool "false"                                                                # disable recents on dock
+defaults write com.apple.dock "mineffect" -string "scale"                                                                 # set dock magnification effect
+
+# Finder 
+defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true"                                                       # show file extension finder
+defaults write com.apple.finder "AppleShowAllFiles" -bool "true"                                                          # show hidden files by default
+defaults write com.apple.finder "ShowPathbar" -bool "true"                                                                # enable path bar on finder bottom
+defaults write com.apple.finder "FXPreferredViewStyle" -string "Nlsv"                                                     # set the default view style to details list
+defaults write com.apple.finder "FXDefaultSearchScope" -string "SCcf"                                                     # set search mode to local folder in finder
+defaults write com.apple.finder "FXEnableExtensionChangeWarning" -bool "false"                                            # disable warning on file extension change
+defaults write com.apple.finder "ShowHardDrivesOnDesktop" -bool "true"                                                    # show external drives on desktop
+defaults write com.apple.finder "ShowRemovableMediaOnDesktop" -bool "false"                                               # show usb drives on desktop
+defaults write com.apple.finder "ShowMountedServersOnDesktop" -bool "true"                                                # show network drives on desktop
+defaults write com.apple.desktopservices DSDontWriteNetworkStores true                                                    # disable .DS_Store on network drives
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true                                                  # disable .DS_Store on usb drives
+defaults write com.apple.finder NewWindowTarget -string "PfHm"                                                            # set default dir for new finder window
+
+# Menu bar
+defaults write com.apple.menuextra.clock "ShowAMPM" -bool "false"                                                         # disable am/pm on menubar clock
+defaults write com.apple.menuextra.clock "ShowDate" -bool "true"                                                          # show date on menubar
+defaults write com.apple.menuextra.clock "ShowDayOfWeek" -bool "true"                                                     # show day of week in date on menubar
+defaults write com.apple.menuextra.clock "ShowSeconds" -bool "true"                                                       # enable seconds on the menubar clock
+
+# Time and Date settings
+defaults write NSGlobalDomain AppleLocale -string "en_US@rg=ptzzzz"                                                       # set country as Portugal and USA
+defaults write NSGlobalDomain AppleICUForce24HourTime -bool true                                                          # 24-hour time format
+defaults write com.apple.menuextra.clock "ShowAMPM" -bool "false"                                                         # remove AM/PM from time display
+defaults write NSGlobalDomain AppleFirstWeekday -dict gregorian 2                                                         # set Monday as first weekday
+defaults write NSGlobalDomain AppleICUDateFormatStrings -dict 1 "dd-MM-yyyy"                                              # date format
+defaults write NSGlobalDomain AppleICUNumberFormat -string "### ### ###.##"                                               # number format
+
+# Language and region settings
+defaults write NSGlobalDomain AppleLanguages -array "en" "pt-PT"                                                          # set languages
+defaults write NSGlobalDomain AppleLocale -string "pt_PT@currency=EUR"                                                    # set locale and currency
+defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"                                                 # set measurement units
+defaults write NSGlobalDomain AppleMetricUnits -bool true                                                                 # set metric units
+
+# Trackpad settings
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1                                             # enable tap-to-click for login screen
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1                                                          # enable tap-to-click globally
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad ForceClick -bool true                                   # enable Force Click
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad HapticFeedback -bool true                               # enable Haptic feedback
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad SoftClick -bool true                                    # enable soft click
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true                           # enable right click
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadTwoFingerClick -bool true                       # enable two-finger right click
+defaults write com.apple.AppleMultitouchTrackpad "Clicking" -bool "true"                                                  # enable tap-to-click
+defaults write com.apple.AppleMultitouchTrackpad TrackpadCornerSecondaryClick -int 0                                      # set Trackpad Corner Secondary Click
+
+# Software Update settings
+sudo softwareupdate --schedule on                                                                                         # enable automatic macOS updates
+sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true                        # enable check for updates
+sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticDownload -bool true                            # enable downloading updates
+sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticallyInstallMacOSUpdates -bool true             # enable installing updates
+sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate CriticalUpdateInstall -bool true                        # enable automatic security updates
+defaults write com.apple.commerce AutoUpdate -bool true                                                                   # enable automatic app updates
+defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1                                                          # check for updates daily
+defaults write com.apple.SoftwareUpdate ConfigDataInstall -int 1                                                          # download apps purchased on other Macs
+defaults write com.apple.commerce AutoUpdateRestartRequired -bool true 
+
+defaults write com.apple.TextEdit RichText -int 0                                                                         # plain text mode for new TextEdit documents
 
 # Install all apps using homebrew
 brew bundle --file={{ .chezmoi.sourceDir }}/../Brewfile 
+
+# Restore data from 1Password
+bash ../restore.sh
+
+# Restart the gpg-agent
+gpgconf --kill gpg-agent
+gpgconf --launch gpg-agent
 
 # Remove Message of the day prompt
 touch $HOME/.hushlogin
@@ -81,7 +143,11 @@ if [ ! -d "$HOME/.config/tmux/plugins/tpm" ]; then
   git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm/
 fi
 
-(crontab -l 2>/dev/null; echo "0 2 * * * /bin/bash -l -c 'brew update && brew upgrade && brew cleanup'") | crontab -
-brew update
-brew bundle --file={{ .chezmoi.sourceDir }}/../Brewfile
-brew upgrade
+# Create Cron Job to Run Brew Upgrade and Update every 14 days and install the formulae and casks in the saved Brewfile.
+(crontab -l 2>/dev/null; echo "0 2 * * * /bin/bash -l -c 'brew update && brew upgrade && brew cleanup'") | crontab - >/dev/null 2>&1
+brew update >/dev/null 2>&1
+brew bundle --file={{ .chezmoi.sourceDir }}/../Brewfile --quiet >/dev/null 2>&1
+brew upgrade >/dev/null 2>&1
+
+
+echo "Please restart your computer to ensure all settings are correctly applied."

@@ -35,3 +35,6 @@ update_or_create "GPG TrustDB" "$TMP_DIR/trust.txt"
 echo "Backup stored securely in 1Password."
 rm -rf "$TMP_DIR"
 
+echo "Saving launchpad layout to iCloud"
+lporg save --icloud
+
