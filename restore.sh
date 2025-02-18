@@ -34,6 +34,7 @@ else
 fi
 
 echo "Restore launchpad layout from iCloud"
+
 lporg load --icloud
 
 echo "Restoring app preferences..."

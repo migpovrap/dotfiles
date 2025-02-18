@@ -19,6 +19,8 @@ plugins=(git zoxide zsh-syntax-highlighting zsh-autosuggestions eza docker fzf z
 ZOXIDE_CMD_OVERRIDE=cd
 source $ZSH/oh-my-zsh.sh
 
+HOMEBREW_BUNDLE_DUMP_NO_VSCODE=1                      # Don't include VSCode extensions when dumping.
+
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
    export EDITOR='nano'

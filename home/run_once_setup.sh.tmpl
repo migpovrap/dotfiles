@@ -12,9 +12,12 @@ sudo scutil --set HostName "Miguel's MacBook Pro"                               
 sudo scutil --set LocalHostName "miguelraposo-macbookpro"                                                                 # change local host name
 defaults write com.apple.CloudSubscriptionFeatures.optIn "545129924" -bool "false"                                        # disable apple inteligence
 defaults write com.apple.TextEdit RichText -int 0                                                                         # plain text mode for new TextEdit documents
+defaults write -g AppleReduceDesktopTinting -bool true                                                                    # disable wallpaper tinting
 
 # Keyboard shortcuts
-defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 "{enabled = 0; value = { parameters = (32, 49, 1048576); type = 'standard'; }; }"     # disable cmd-space for spotlight
+/usr/libexec/PlistBuddy -c "Set :AppleSymbolicHotKeys:64:enabled false" ~/Library/Preferences/com.apple.symbolichotkeys.plist     # disable cmd-space for spotlight
+/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u                                    # needs a reboot
+
 
 # Dock
 defaults write com.apple.dock "orientation" -string "left"                                                                # set dock to left
@@ -89,6 +92,7 @@ defaults write com.apple.WindowManager EnableTilingOptionAccelerator -int 0     
 defaults write com.apple.WindowManager EnableTopTilingByEdgeDrag -int 0                                                   # disable top edge drag tiling (Apple Window manager)
 defaults write com.apple.WindowManager GloballyEnabled -int 0                                                             # disable globally (Apple Window manager)
 defaults write com.apple.WindowManager GloballyEnabledEver -int 1                                                         # enable globally ever
+defaults write com.apple.stageManager enabled -bool false                                                                 # disable Stage Manager
 defaults write com.apple.WindowManager HasDisplayedShowDesktopEducation -int 1                                            # show desktop education displayed
 defaults write com.apple.WindowManager HideDesktop -int 1                                                                 # hide desktop in stage  manager
 defaults write com.apple.WindowManager StageManagerHideWidgets -int 1                                                     # hide widgets in Stage manager

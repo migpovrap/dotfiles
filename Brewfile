@@ -1,5 +1,6 @@
 tap "blacktop/tap"
 tap "homebrew/bundle"
+
 brew "bat"
 brew "chezmoi"
 brew "clang-format"
@@ -31,6 +32,7 @@ brew "tree"
 brew "yazi"
 brew "zoxide"
 brew "blacktop/tap/lporg"
+
 cask "1password"
 cask "1password-cli"
 cask "86box"
@@ -62,55 +64,13 @@ cask "utm"
 cask "visual-studio-code"
 cask "whisky"
 cask "zed"
+
 mas "Amphetamine", id: 937984704
 mas "Goodnotes", id: 1444383602
-mas "Keynote", id: 409183694
 mas "Microsoft To Do", id: 1274495053
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
 mas "Spark Desktop", id: 6445813049
 mas "WhatsApp", id: 310633997
 mas "Windows App", id: 1295203466
 mas "WireGuard", id: 1451685025
 mas "Xcode", id: 497799835
-vscode "alexcvzz.vscode-sqlite"
-vscode "arthurwang.vsc-prolog"
-vscode "bradlc.vscode-tailwindcss"
-vscode "github.copilot"
-vscode "github.copilot-chat"
-vscode "gruntfuggly.todo-tree"
-vscode "ms-azuretools.vscode-docker"
-vscode "ms-python.debugpy"
-vscode "ms-python.pylint"
-vscode "ms-python.python"
-vscode "ms-python.vscode-pylance"
-vscode "ms-toolsai.jupyter"
-vscode "ms-toolsai.jupyter-keymap"
-vscode "ms-toolsai.jupyter-renderers"
-vscode "ms-toolsai.vscode-jupyter-cell-tags"
-vscode "ms-toolsai.vscode-jupyter-powertoys"
-vscode "ms-toolsai.vscode-jupyter-slideshow"
-vscode "ms-vscode-remote.remote-ssh"
-vscode "ms-vscode-remote.remote-ssh-edit"
-vscode "ms-vscode.cmake-tools"
-vscode "ms-vscode.cpptools"
-vscode "ms-vscode.cpptools-extension-pack"
-vscode "ms-vscode.cpptools-themes"
-vscode "ms-vscode.live-server"
-vscode "ms-vscode.makefile-tools"
-vscode "ms-vscode.remote-explorer"
-vscode "rajkundu.junit-jar-downloader"
-vscode "redhat.java"
-vscode "ritwickdey.liveserver"
-vscode "tomoki1207.pdf"
-vscode "visualstudioexptteam.intellicode-api-usage-examples"
-vscode "visualstudioexptteam.vscodeintellicode"
-vscode "vscjava.vscode-gradle"
-vscode "vscjava.vscode-java-debug"
-vscode "vscjava.vscode-java-dependency"
-vscode "vscjava.vscode-java-pack"
-vscode "vscjava.vscode-java-test"
-vscode "vscjava.vscode-maven"
-vscode "waderyan.gitblame"
-vscode "zhuangtongfa.material-theme"
-vscode "zhwu95.riscv"
+
