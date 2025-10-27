@@ -17,7 +17,7 @@ normal.family = "MesloLGL Nerd Font Mono"
 size = 13
 
 [cursor.style]
-shape = "Block"
+shape = "Beam"
 blinking = "On"
 
 [general]

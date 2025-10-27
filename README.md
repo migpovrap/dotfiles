@@ -8,7 +8,6 @@ A cron job is used to keep brew updated and keep in sync with the formulas and c
 
 - `setup.sh`: One line setup script to configure a new machine.
 - `backup.sh`: Script to backup GPG keys and app preferences, and save them to 1Password and iCloud.
-- `exportRaycastPreferences.scpt`: AppleScript to export Raycast preferences and save them to iCloud.
 - `Brewfile`: List of Homebrew formulas and casks that I want to be installed.
 - `plists/`: Directory containing app preference files in plist format.
 - `home/`: Chezmoi home directory
@@ -148,7 +147,7 @@ After all of this if you still want to use it, you should fork it and review all
 ### Future improvements
 - [ ] Use Cmd key on Nvim instead of Ctrl.
 - [ ] Add more shortcuts to the cheatsheet.
-- [ ] Find defaults setting for display, True tone and dock apps layout, app notifications, disable window manager.
+- [ ] Find defaults setting for display, True tone, app notifications, disable window manager.
 
 
 ## Acknowledgements

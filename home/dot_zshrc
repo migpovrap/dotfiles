@@ -76,6 +76,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - zsh)"
 
+eval "$(pyenv virtualenv-init -)"
+
 alias gcc='gcc-14'
 alias g++='g++-14'
 
@@ -133,7 +135,13 @@ function linux() {
   osascript -e 'quit app "Docker Desktop"'
 }
 
-# Start tmux if not already running
+# Check if tmux is installed and not already running
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  tmux attach-session -t default || tmux new-session -s default
+  echo -n "Do you want to start tmux? [y/N] "
+  read answer
+  case "$answer" in
+    [yY][eE][sS]|[yY])
+      tmux attach-session -t default || tmux new-session -s default
+      ;;
+  esac
 fi

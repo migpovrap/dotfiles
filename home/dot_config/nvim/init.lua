@@ -366,3 +366,10 @@ require 'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+-- Restore cursor shape on exit (for terminals like Alacritty)
+vim.api.nvim_create_augroup("RestoreCursorShapeOnExit", { clear = true })
+vim.api.nvim_create_autocmd("VimLeave", {
+  group = "RestoreCursorShapeOnExit",
+  pattern = "*",
+  command = "set guicursor=a:ver25-blinkwait400-blinkoff400-blinkon400"
+})

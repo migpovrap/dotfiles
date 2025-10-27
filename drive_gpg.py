@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import os
 import shutil
 import tempfile
@@ -32,18 +30,15 @@ def decrypt_gpgtar(file_path: Path) -> None:
     """Decrypt and extract a .gpgtar file"""
     with tempfile.TemporaryDirectory() as temp_dir:
         # Decrypt to temp directory
-        subprocess.run(['gpgtar', '--decrypt', file_path.name], cwd=temp_dir, check=True)
-        
+        subprocess.run(['gpgtar', '--decrypt', str(file_path)], cwd=temp_dir, check=True)
         # Find the extracted directory (usually ends with _1_)
         extracted_dir = next(Path(temp_dir).glob("*.gpgtar_1_"), None)
         if extracted_dir:
             # Move contents to the directory where the .gpgtar file is located
             output_dir = file_path.parent
-            
             # Move contents to final location
             for item in extracted_dir.iterdir():
                 shutil.move(str(item), str(output_dir / item.name))
-            
             # Remove the temporary extracted directory
             shutil.rmtree(extracted_dir)
             print(f"Extracted {file_path} to {output_dir}")
@@ -72,36 +67,36 @@ def encrypt_file(file_path: str, gpg_key: str) -> None:
 
 def main():
     gpg_key = "migpovrap@hotmail.com"
-    
+
     # Change to the target directory
     os.chdir(TARGET_DIRECTORY)
-    
+
     while True:
         gpg_files, gpgtar_files = get_gpg_files()
-        
+
         print("\nAvailable operations:")
         print("1. Decrypt files")
         print("2. Encrypt a file/directory")
         print("3. Exit")
-        
+
         choice = input("\nSelect an option (1-3): ")
-        
+
         if choice == "1":
             print("\nAvailable files to decrypt:")
             all_files = [(i, f) for i, f in enumerate(gpg_files + gpgtar_files, 1)]
-            
+
             for idx, file in all_files:
                 print(f"{idx}. {file.name}")
-            
+
             if not all_files:
                 print("No encrypted files found.")
                 continue
-                
+
             try:
                 file_idx = int(input("\nSelect a file number to decrypt (or 0 to cancel): ")) - 1
                 if file_idx == -1:
                     continue
-                    
+
                 selected_file = all_files[file_idx][1]
                 if selected_file.suffix == '.gpg':
                     decrypt_gpg(selected_file)
@@ -109,31 +104,31 @@ def main():
                     decrypt_gpgtar(selected_file)
             except (ValueError, IndexError):
                 print("Invalid selection")
-                
+
         elif choice == "2":
             print("\nAvailable files and directories to encrypt:")
             files_and_dirs = list_files_and_dirs()
-            
+
             for idx, item in enumerate(files_and_dirs, 1):
                 print(f"{idx}. {item.name}")
-            
+
             if not files_and_dirs:
                 print("No files or directories found.")
                 continue
-                
+
             try:
                 file_idx = int(input("\nSelect a file/directory number to encrypt (or 0 to cancel): ")) - 1
                 if file_idx == -1:
                     continue
-                    
+
                 selected_file = files_and_dirs[file_idx]
                 encrypt_file(str(selected_file), gpg_key)
             except (ValueError, IndexError):
                 print("Invalid selection")
-                
+
         elif choice == "3":
             break
-            
+
         else:
             print("Invalid option")
 
