@@ -39,9 +39,6 @@ rm -rf "$TMP_DIR"
 BrewfilePath="~/.local/share/chezmoi/Brewfile" &>/dev/null
 brew bundle dump --file="$BrewfilePath" --force &>/dev/null
 
-echo "Saving launchpad layout to iCloud"
-lporg save --icloud &>/dev/null
-
 # Backup apps preferences
 echo "Backing up apps preferences..."
 defaults export com.surteesstudios.Bartender ../plists/bartender5.plist
