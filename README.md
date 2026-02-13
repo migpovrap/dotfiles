@@ -13,8 +13,8 @@ A cron job is used to keep brew updated and keep in sync with the formulas and c
 - `home/`: Chezmoi home directory
 - `pinentry_op.sh`: Script to use 1Password to autofill the gpg key password.
 - `drive_gpg.py`: Python app to facilitate the use of GPG for encrypting sensitive files.
-- `importRaycast.scpt`: Restore Raycast settings from iCloud using Apple script.
-- `exportRaycast.scpt`: Backup Raycast settings to iCloud using Apple script.
+- `importRaycast.sh`: Restore Raycast settings from iCloud.
+- `exportRaycast.sh`: Backup Raycast settings to iCloud.
 
 - Config for:
   - Neovim
@@ -147,12 +147,12 @@ After all of this if you still want to use it, you should fork it and review all
 ### Future improvements
 - [ ] Use Cmd key on Nvim instead of Ctrl.
 - [ ] Add more shortcuts to the cheatsheet.
-- [ ] Find defaults setting for display, True tone, app notifications, disable window manager.
+- [ ] Find defaults setting True tone, app notifications, disable window manager.
 
 
 ## Acknowledgements
 - [Mathias Bynens](https://mathiasbynens.be/) and [Kevin Suttle](https://kevinsuttle.com/) for their macOS defaults [repositories](https://github.com/kevinSuttle/MacOS-Defaults).
 - [Yann Bertrand](https://yann-bertrand.fr/) for his macOS defaults list and tools [repository](https://github.com/yannbertrand/macos-defaults).
-- [Blacktop](https://blog.blacktop.io) for his amazing tool to manage the lauchpad layout, [lporg](https://github.com/blacktop/lporg). 
+- [Kyle Crawford](https://github.com/kcrawford) for his amazing tool to manage the dock, [dockutil](https://github.com/kcrawford/dockutil). 
 - [Jake Hilborn](https://github.com/jakehilborn) for his tool to config the dislay settings from the cli, [displayplacer](https://github.com/jakehilborn/displayplacer).
 - [Inês Costa](https://github.com/inesiscosta) for her dotfiles repository, used as inspiration for some scripts and organization.

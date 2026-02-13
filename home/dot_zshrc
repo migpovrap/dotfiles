@@ -142,14 +142,3 @@ function linux() {
   podman machine stop
   osascript -e 'quit app "Podman Desktop"'
 }
-
-# Check if tmux is installed and not already running
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  echo -n "Do you want to start tmux? [y/N] "
-  read answer
-  case "$answer" in
-    [yY][eE][sS]|[yY])
-      tmux attach-session -t default || tmux new-session -s default
-      ;;
-  esac
-fi

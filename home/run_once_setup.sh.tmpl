@@ -99,10 +99,6 @@ defaults write com.apple.WindowManager StageManagerHideWidgets -int 1           
 defaults write com.apple.WindowManager StandardHideDesktopIcons -int 0                                                    # hide desktop icons in stage manager
 defaults write com.apple.WindowManager StandardHideWidgets -int 1                                                         # hide widgets
 
-# Display settings
-displayplacer "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 res:1800x1169 hz:120 color_depth:8 enabled:true scaling:on origin:(0,0) degree:0"  # set the scalling for the display 
-
-
 # Install all apps using homebrew
 brew bundle --file={{ .chezmoi.sourceDir }}/../Brewfile 
 
@@ -115,6 +111,23 @@ gpgconf --launch gpg-agent
 
 # Remove Message of the day prompt
 touch $HOME/.hushlogin
+
+# Display settings
+displayplacer "id:37D8832A-2D66-02CA-B9F7-8F30A301B230 res:1800x1169 hz:120 color_depth:8 enabled:true scaling:on origin:(0,0) degree:0"  # set the scalling for the display 
+
+#Clean the dock
+dockutil --remove all --no-restart
+
+# Add apps to dock in correct order
+dockutil --add /System/Applications/Apps.app --no-restart
+dockutil --add "/Applications/Spark Desktop.app" --no-restart
+dockutil --add "/Applications/Google Chrome.app" --no-restart
+dockutil --add "/System/Applications/System Settings.app" --no-restart
+dockutil --add /Applications/Alacritty.app --no-restart
+dockutil --add /Applications/WhatsApp.app --no-restart
+
+killall Dock || true
+echo "Dock updated."
 
 # Install all things from github
 
@@ -147,9 +160,9 @@ if [ ! -d "$HOME/.config/yazi/flavors/onedark.yazi" ]; then
   git clone https://github.com/BennyOe/onedark.yazi.git ~/.config/yazi/flavors/onedark.yazi
 fi
 
-# Install Bat plugin for yazi
-if [ ! -d "$HOME/.config/yazi/plugins/bat.yazi" ]; then
-  git clone https://github.com/mgumz/yazi-plugin-bat.git ~/.config/yazi/plugins/bat.yazi
+# Install Preview plugin for yazi
+if [ ! -d "$HOME/.config/yazi/plugins/preview.yazi" ]; then
+  git clone https://github.com/Urie96/preview.yazi.git ~/.config/yazi/plugins/preview.yazi
 fi
 
 # Install fg plugin for yazi
