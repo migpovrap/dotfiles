@@ -39,7 +39,6 @@ require("lazy").setup({
     "williamboman/mason-lspconfig.nvim",  -- Mason LSP plugins easy configuration
     "neovim/nvim-lspconfig",              -- LSP Configuaration
   },
-  "github/copilot.vim",                   -- GitHub Copilot
   -- autocompletion
   "hrsh7th/nvim-cmp",                     -- completion plugin
   "hrsh7th/cmp-buffer",                   -- source for text in buffer
@@ -236,30 +235,49 @@ require("mason-lspconfig").setup({
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-require("lspconfig").lua_ls.setup {
-  capabilities = capabilities
+-- Configure LSP servers
+vim.lsp.config.lua_ls = {
+  capabilities = capabilities,
+  cmd = { 'lua-language-server' },
 }
-require 'lspconfig'.clangd.setup {
-  capabilities = capabilities
+
+vim.lsp.config.clangd = {
+  capabilities = capabilities,
+  cmd = { 'clangd' },
 }
-require("lspconfig").jdtls.setup {
-  capabilities = capabilities
+
+vim.lsp.config.jdtls = {
+  capabilities = capabilities,
+  cmd = { 'jdtls' },
 }
-require("lspconfig").pyright.setup {
-  capabilities = capabilities
+
+vim.lsp.config.pyright = {
+  capabilities = capabilities,
+  cmd = { 'pyright-langserver', '--stdio' },
 }
-require("lspconfig").tailwindcss.setup {
-  capabilities = capabilities
+
+vim.lsp.config.tailwindcss = {
+  capabilities = capabilities,
+  cmd = { 'tailwindcss-language-server', '--stdio' },
 }
-require'lspconfig'.ts_ls.setup {
-  capabilities = capabilities
+
+vim.lsp.config.ts_ls = {
+  capabilities = capabilities,
+  cmd = { 'typescript-language-server', '--stdio' },
 }
-require'lspconfig'.cssls.setup {
-  capabilities = capabilities
+
+vim.lsp.config.cssls = {
+  capabilities = capabilities,
+  cmd = { 'vscode-css-language-server', '--stdio' },
 }
-require'lspconfig'.html.setup {
-  capabilities = capabilities
+
+vim.lsp.config.html = {
+  capabilities = capabilities,
+  cmd = { 'vscode-html-language-server', '--stdio' },
 }
+
+-- Enable all configured LSP servers
+vim.lsp.enable({ 'lua_ls', 'clangd', 'jdtls', 'pyright', 'tailwindcss', 'ts_ls', 'cssls', 'html' })
 
 -- Setup nvim-cmp.
 local cmp = require 'cmp'
