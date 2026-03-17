@@ -75,6 +75,11 @@ opt.cursorline     = false
 opt.guicursor      = "n-c-o:block,i-v:ver25"
 opt.fileencoding   = "utf-8"
 
+-- Inside tmux we render Neovim status in tmux via vim-tpipeline.
+if vim.env.TMUX then
+  opt.laststatus = 0
+end
+
 -- Plugins
 require("lazy").setup({
 
@@ -87,11 +92,13 @@ require("lazy").setup({
         options = {
           cursorline           = false,
           transparency         = true,
-          lualine_transparency = true,
+          lualine_transparency = false,
         },
         highlights = {
           Pmenu    = { bg = "NONE" },
           PmenuSel = { bg = "NONE", bold = true },
+          StatusLine = { bg = "#1f2329" },
+          StatusLineNC = { bg = "#1b1f25" },
         },
       })
       vim.cmd("colorscheme onedark")
@@ -104,30 +111,143 @@ require("lazy").setup({
   -- Status line
   {
     "nvim-lualine/lualine.nvim",
+    cond = function() return not vim.env.TMUX end,
     event = "VimEnter",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      {
+        "christopher-francisco/tmux-status.nvim",
+        opts = {
+          window = {
+            separator = "  ",
+            text = "index_and_name",
+          },
+          session = { icon = "󱂬" },
+          colors = {
+            window_active = "#e5c07b",
+            window_inactive = "#7f848e",
+            window_inactive_recent = "#61afef",
+            session = "#98c379",
+          },
+          force_show = true,
+          manage_tmux_status = true,
+        },
+      },
+    },
     config = function()
+      local tmux_status = require("tmux-status")
+      local function current_tmux_window()
+        local index = tmux_status.tmux_render_format("window_index")
+        local name = tmux_status.tmux_render_format("window_name")
+        local flags = tmux_status.tmux_render_format("window_flags")
+        return string.format("%s:%s%s", index, name, flags)
+      end
+
+      local onedark_dense = {
+        normal = {
+          a = { fg = "#1f2329", bg = "#98c379", gui = "bold" },
+          b = { fg = "#e5c07b", bg = "#282c34", gui = "bold" },
+          c = { fg = "#abb2bf", bg = "#1f2329" },
+        },
+        insert = {
+          a = { fg = "#1f2329", bg = "#61afef", gui = "bold" },
+          b = { fg = "#e5c07b", bg = "#282c34", gui = "bold" },
+          c = { fg = "#abb2bf", bg = "#1f2329" },
+        },
+        visual = {
+          a = { fg = "#1f2329", bg = "#c678dd", gui = "bold" },
+          b = { fg = "#e5c07b", bg = "#282c34", gui = "bold" },
+          c = { fg = "#abb2bf", bg = "#1f2329" },
+        },
+        replace = {
+          a = { fg = "#1f2329", bg = "#e06c75", gui = "bold" },
+          b = { fg = "#e5c07b", bg = "#282c34", gui = "bold" },
+          c = { fg = "#abb2bf", bg = "#1f2329" },
+        },
+        command = {
+          a = { fg = "#1f2329", bg = "#56b6c2", gui = "bold" },
+          b = { fg = "#e5c07b", bg = "#282c34", gui = "bold" },
+          c = { fg = "#abb2bf", bg = "#1f2329" },
+        },
+        inactive = {
+          a = { fg = "#7f848e", bg = "#1b1f25", gui = "bold" },
+          b = { fg = "#7f848e", bg = "#1b1f25" },
+          c = { fg = "#7f848e", bg = "#1b1f25" },
+        },
+      }
+
       require("lualine").setup({
         options = {
-          theme                = "onedark",
+          theme                = onedark_dense,
           section_separators   = { left = "", right = "" },
           component_separators = { left = "", right = "" },
           globalstatus         = true,
+          always_divide_middle = false,
         },
         sections = {
-          lualine_a = { "mode" },
-          lualine_b = { "branch", "diff", "diagnostics" },
-          lualine_c = { { "filename", path = 1 } },  -- show relative path
-          lualine_x = { "filetype" },
-          lualine_y = { "progress" },
-          lualine_z = { "location" },
+          lualine_a = {
+            {
+              "mode",
+              fmt = function(str) return string.lower(str) end,
+            },
+          },
+          lualine_b = {
+            {
+              tmux_status.tmux_session,
+              cond = tmux_status.show,
+              padding = { left = 1, right = 1 },
+            },
+            {
+              current_tmux_window,
+              cond = tmux_status.show,
+              color = { fg = "#98c379", bg = "#282c34", gui = "bold" },
+              padding = { left = 0, right = 1 },
+            },
+            {
+              function()
+                local windows = tmux_status.tmux_windows()
+                if windows == nil or windows == "" then
+                  return tmux_status.tmux_render_format("window_index") .. ":" .. tmux_status.tmux_render_format("window_name")
+                end
+                return windows
+              end,
+              cond = tmux_status.show,
+              color = { fg = "#e5c07b", bg = "#282c34", gui = "bold" },
+              padding = { left = 0, right = 1 },
+            },
+          },
+          lualine_c = {
+            {
+              "filename",
+              path = 0,
+              symbols = { modified = " *", readonly = " ro", unnamed = " [No Name]" },
+              color = { fg = "#7f848e", bg = "#1f2329" },
+            },
+          },
+          lualine_x = {
+            {
+              "branch",
+              icon = "",
+              color = { fg = "#61afef", bg = "#1f2329", gui = "bold" },
+            },
+          },
+          lualine_y = {},
+          lualine_z = {
+            {
+              "filetype",
+              colored = false,
+              icon_only = false,
+              color = { fg = "#e5c07b", bg = "#1f2329", gui = "bold" },
+            },
+            {
+              "location",
+              color = { fg = "#98c379", bg = "#1f2329", gui = "bold" },
+            },
+          },
         },
       })
-      -- Sync status line to tmux via tpipeline
-      vim.cmd("set stl=%!tpipeline#stl#line()")
     end,
   },
-  { "vimpostor/vim-tpipeline" },
 
   -- Tabline
   {
@@ -369,18 +489,19 @@ require("lazy").setup({
     config = function()
       vim.diagnostic.config({
         virtual_text     = { prefix = "●" },
-        signs            = true,
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = " ",
+            [vim.diagnostic.severity.WARN]  = " ",
+            [vim.diagnostic.severity.HINT]  = "󰠠 ",
+            [vim.diagnostic.severity.INFO]  = " ",
+          },
+        },
         underline        = true,
         update_in_insert = false,
         severity_sort    = true,
         float = { border = "rounded", source = "always", header = "", prefix = "" },
       })
-
-      local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-      for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-      end
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(ev)
@@ -705,3 +826,60 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     vim.api.nvim_win_set_cursor(0, pos)
   end,
 })
+
+-- Sync core Neovim context to tmux statusline when inside tmux.
+if vim.env.TMUX then
+  local last = { mode = "", branch = "", filetype = "", pos = "" }
+
+  local function tmux_set(name, value)
+    if last[name] == value then return end
+    last[name] = value
+    vim.fn.system("tmux set-option -gq @nvim_" .. name .. " " .. vim.fn.shellescape(value))
+  end
+
+  local function current_mode()
+    local m = vim.api.nvim_get_mode().mode
+    local labels = {
+      n = "normal",
+      i = "insert",
+      v = "visual",
+      V = "v-line",
+      ["\22"] = "v-block",
+      c = "command",
+      R = "replace",
+      t = "terminal",
+    }
+    return labels[m] or m
+  end
+
+  local function update_tmux_nvim_status()
+    local branch = vim.b.gitsigns_head or ""
+    if branch ~= "" then branch = " " .. branch end
+
+    local ft = vim.bo.filetype
+    if ft == "" then ft = "text" end
+
+    local p = vim.api.nvim_win_get_cursor(0)
+    local pos = string.format("%d:%d", p[1], p[2] + 1)
+
+    tmux_set("mode", current_mode())
+    tmux_set("branch", branch)
+    tmux_set("filetype", ft)
+    tmux_set("pos", pos)
+  end
+
+  vim.api.nvim_create_augroup("TmuxNvimStatusSync", { clear = true })
+  vim.api.nvim_create_autocmd({ "VimEnter", "ModeChanged", "BufEnter", "CursorMoved", "CursorMovedI", "WinEnter", "BufWritePost" }, {
+    group = "TmuxNvimStatusSync",
+    callback = update_tmux_nvim_status,
+  })
+  vim.api.nvim_create_autocmd("VimLeavePre", {
+    group = "TmuxNvimStatusSync",
+    callback = function()
+      tmux_set("mode", "")
+      tmux_set("branch", "")
+      tmux_set("filetype", "")
+      tmux_set("pos", "")
+    end,
+  })
+end
