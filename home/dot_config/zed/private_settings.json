@@ -1,0 +1,71 @@
+{
+  "bottom_dock_layout": "right_aligned",
+  "title_bar": {
+    "show_branch_icon": true
+  },
+  "debugger": {
+    "button": false
+  },
+  "agent": {
+    "button": false,
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "collaboration_panel": {
+    "button": false
+  },
+  "notification_panel": {
+    "button": false
+  },
+  "git_panel": {
+    "dock": "right"
+  },
+  "project_panel": {
+    "button": true,
+    "folder_icons": true,
+    "file_icons": true,
+    "dock": "right"
+  },
+  "prettier": {
+    "allowed": false
+  },
+  "agent_ui_font_size": 16.0,
+  "ui_font_family": "SF Pro",
+  "buffer_font_weight": 400.0,
+  "buffer_font_family": "JetBrains Mono",
+  "buffer_font_features": {
+    "calt": false,
+  },
+  "agent_servers": {},
+  "disable_ai": true,
+  "terminal": {
+    "cursor_shape": "bar",
+    "env": {
+      "FIG_NEW_SESSION": "\"1\""
+    },
+    "font_family": "JetBrains Mono"
+  },
+  "base_keymap": "VSCode",
+  "preview_tabs": {
+    "enabled": false
+  },
+  "minimap": {
+    "show": "never"
+  },
+  "show_whitespaces": "trailing",
+  "wrap_guides": [
+    80
+  ],
+  "tab_size": 2,
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "session": {
+    "trust_all_worktrees": true
+  },
+  "icon_theme": "Zed (Default)",
+  "ui_font_size": 16.0,
+  "buffer_font_size": 13.0,
+  "theme": "One Dark Pro"
+}

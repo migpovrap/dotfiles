@@ -436,31 +436,28 @@ require("lazy").setup({
 
   -- Markdown
   {
-    "MeanderingProgrammer/render-markdown.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
-    ft   = { "markdown" },
+    "OXY2DEV/markview.nvim",
+    lazy = false, -- must NOT be lazy-loaded per plugin docs
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
     opts = {
-      heading  = { enabled = true },
-      code     = { enabled = true, style = "full" },
-      bullet   = { enabled = true },
-      checkbox = { enabled = true },
+      preview = {
+        icon_provider = "devicons", -- uses your nvim-web-devicons
+      },
+      latex = {
+        enable = true,
+      },
+      html = {
+        enable = true,
+        tags = { enable = true },
+      },
     },
-  },
-
-  -- Markdown — GFM (<leader>mp)
-  {
-    "iamcco/markdown-preview.nvim",
-    cmd   = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
-    ft    = { "markdown" },
-    build = function() vim.fn["mkdp#util#install"]() end,
-    keys  = {
-      { "<leader>mp", "<cmd>MarkdownPreviewToggle<CR>", desc = "Markdown preview (browser)" },
+    keys = {
+      { "<leader>mp", "<cmd>Markview splitToggle<CR>", desc = "Markdown splitview toggle" },
+      { "<leader>mt", "<cmd>Markview toggle<CR>",      desc = "Markdown preview toggle" },
     },
-    config = function()
-      vim.g.mkdp_theme           = "dark"
-      vim.g.mkdp_auto_close      = 1   -- close tab when leaving md buffer
-      vim.g.mkdp_combine_preview = 1   -- reuse single browser tab
-    end,
   },
 
   -- Mason

@@ -22,7 +22,7 @@ defaults write -g AppleReduceDesktopTinting -bool true                          
 # Dock
 defaults write com.apple.dock "orientation" -string "left"                                                                # set dock to left
 defaults write com.apple.dock "tilesize" -int "35 "                                                                       # set dock icon size
-defaults write com.apple.dock "magnification" -bool "true"                                                                    # enable dock magnification
+defaults write com.apple.dock "magnification" -bool "true"                                                                # enable dock magnification
 defaults write com.apple.dock "autohide" -bool "true"                                                                     # enable dock autohide
 defaults write com.apple.dock "show-recents" -bool "false"                                                                # disable recents on dock
 defaults write com.apple.dock "mineffect" -string "scale"                                                                 # set dock magnification effect
@@ -99,6 +99,9 @@ defaults write com.apple.WindowManager StageManagerHideWidgets -int 1           
 defaults write com.apple.WindowManager StandardHideDesktopIcons -int 0                                                    # hide desktop icons in stage manager
 defaults write com.apple.WindowManager StandardHideWidgets -int 1                                                         # hide widgets
 
+# Disable Font Smoothing
+defaults -currentHost write -g AppleFontSmoothing -int 0
+
 # Install all apps using homebrew
 brew bundle --file={{ .chezmoi.sourceDir }}/../Brewfile 
 
@@ -125,6 +128,7 @@ dockutil --add "/Applications/Google Chrome.app" --no-restart
 dockutil --add "/System/Applications/System Settings.app" --no-restart
 dockutil --add /Applications/Alacritty.app --no-restart
 dockutil --add /Applications/WhatsApp.app --no-restart
+dockutil --add "/Applications/Visual Studio Code.app" --no-restart
 
 killall Dock || true
 echo "Dock updated."
