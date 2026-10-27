@@ -1,25 +1,37 @@
 #!/bin/sh
-COMMAND="op read $OP_PIN_ITEM"
+# pinentry for gpg-agent: hands the GPG passphrase from 1Password to gpg.
+# The op:// reference is a pointer, not a secret, so it is hardcoded on purpose.
+# No logging, no temp files, no caching: gpg-agent owns the cache.
+set -u
 
-echo "OK"
-while read cmd rest; do
-  echo "cmd=$cmd rest=$rest" >&2
-  echo "cmd=$cmd rest=$rest" >> $LOG
-  case "$cmd" in
-    \#*)
-      echo "OK"
-      ;;
+OP_ITEM='op://Personal/GPGKey/password'
+
+OP_BIN=/opt/homebrew/bin/op
+if [ ! -x "$OP_BIN" ]; then
+  OP_BIN=$(command -v op 2>/dev/null || true)
+fi
+
+escape() {
+  printf '%s' "$1" | sed -e 's/%/%25/g'
+}
+
+printf 'OK Pleased to meet you\n'
+
+while IFS= read -r line; do
+  case "${line%% *}" in
     GETPIN)
-      PASSPHRASE=${PASSPHRASE-`$COMMAND`}
-      echo "D ${PASSPHRASE}"
-      echo "OK"
+      if [ -n "$OP_BIN" ] && pin=$("$OP_BIN" read "$OP_ITEM" 2>/dev/null) && [ -n "$pin" ]; then
+        printf 'D %s\nOK\n' "$(escape "$pin")"
+      else
+        printf 'ERR 83886179 Operation cancelled\n'
+      fi
       ;;
     BYE)
-      echo "OK"
+      printf 'OK\n'
       exit 0
       ;;
     *)
-      echo "OK"
+      printf 'OK\n'
       ;;
   esac
 done

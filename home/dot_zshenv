@@ -1,0 +1,10 @@
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='nano'
+  export VISUAL='nano'
+else
+  export EDITOR='nvim'
+  export VISUAL='nvim'
+fi
+
+export HOMEBREW_BUNDLE_DUMP_NO_VSCODE=1
+export SDKMAN_DIR="$HOME/.sdkman"

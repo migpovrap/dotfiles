@@ -1,57 +1,65 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
-# Check if the ~/.gnupg directory is empty or doesn't exist
-if [ ! -d "$HOME/.gnupg" ] || [ -z "$(ls -A $HOME/.gnupg)" ]; then
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# --- GPG keys (only when the local keyring is empty) -----------------------
+if [ ! -d "$HOME/.gnupg" ] || [ -z "$(ls -A "$HOME/.gnupg")" ]; then
   echo "GPG directory is empty or doesn't exist. Proceeding with restoration..."
 
-  # Ensure the user is authenticated in 1Password
-  eval $(op signin)
+  if ! op whoami >/dev/null 2>&1; then
+    eval "$(op signin)"
+  fi
 
-  # Temporary directory
-  TMP_DIR=$(mktemp -d)
+  umask 077
+  TMP_DIR="$(mktemp -d)"
+  trap 'rm -rf "$TMP_DIR"' EXIT
+
   echo "Retrieving GPG keys from 1Password..."
+  op document get "GPG Private Keys" >"$TMP_DIR/privatekeys.asc"
+  op document get "GPG Public Keys" >"$TMP_DIR/pubkeys.asc"
+  op document get "GPG TrustDB" >"$TMP_DIR/trust.txt"
 
-  # Fetch from 1Password
-  op document get "GPG Private Keys" > "$TMP_DIR/privatekeys.asc"
-  op document get "GPG Public Keys" > "$TMP_DIR/pubkeys.asc"
-  op document get "GPG TrustDB" > "$TMP_DIR/trust.txt"
-
-  # Import into GPG
-  echo "Importing private keys..."
   gpg --import "$TMP_DIR/privatekeys.asc"
-
-  echo "Importing public keys..."
   gpg --import "$TMP_DIR/pubkeys.asc"
-
-  echo "Importing trust database..."
   gpg --import-ownertrust "$TMP_DIR/trust.txt"
 
   echo "GPG keys restored successfully."
-  rm -rf "$TMP_DIR"
 else
   echo "GPG directory is not empty. Skipping restoration."
 fi
 
-echo "Restore launchpad layout from iCloud"
-
-lporg load --icloud
-
+# --- App preferences -------------------------------------------------------
 echo "Restoring app preferences..."
-for app in "com.surteesstudios.Bartender" "com.lwouis.alt-tab-macos" "com.knollsoft.Rectangle" "pl.maketheweb.cleanshotx" "com.if.Amphetamine" "com.raycast.macos"; do
-  APP_PID=$(pgrep -f "$app")
-  if [ -n "$APP_PID" ]; then
-    kill "$APP_PID"
-  fi
+for app in "com.surteesstudios.Bartender" "com.lwouis.alt-tab-macos" \
+           "com.knollsoft.Rectangle" "pl.maketheweb.cleanshotx" \
+           "com.if.Amphetamine"; do
+  APP_PID="$(pgrep -f "$app" || true)"
+  [ -n "$APP_PID" ] && kill "$APP_PID" 2>/dev/null || true
 done
 
-defaults import com.surteesstudios.Bartender ../plists/bartender5.plist
-defaults import com.lwouis.alt-tab-macos ../plists/alttab.plist
-defaults import com.knollsoft.Rectangle ../plists/rectangle.plist
-defaults import pl.maketheweb.cleanshotx ../plists/cleanshotx.plist
-defaults import com.if.Amphetamine ../plists/amphetamine.plist
-defaults import com.raycast.macos ../plists/raycast.plist
+import_defaults() {
+  local domain="$1" file="$2"
+  [ -f "$file" ] || { echo "  skipped $domain (no backup file)"; return 0; }
+  if defaults import "$domain" "$file" 2>/dev/null; then
+    echo "  restored $domain"
+  else
+    echo "  skipped $domain (app missing or never launched)"
+  fi
+}
 
-# Retrieve password from 1Password and pass it as an argument
-PASSWORD=$(op item get "Vercel" --fields label=password)
-osascript ../importRaycast.scpt "$PASSWORD"
+import_defaults com.surteesstudios.Bartender "$REPO_DIR/plists/bartender5.plist"
+import_defaults com.lwouis.alt-tab-macos        "$REPO_DIR/plists/alttab.plist"
+import_defaults com.knollsoft.Rectangle         "$REPO_DIR/plists/rectangle.plist"
+import_defaults pl.maketheweb.cleanshotx        "$REPO_DIR/plists/cleanshotx.plist"
+import_defaults com.if.Amphetamine              "$REPO_DIR/plists/amphetamine.plist"
+import_defaults com.apple.HIToolbox             "$REPO_DIR/plists/hitoolbox.plist"
+
+# --- Manual steps ----------------------------------------------------------
+cat <<'EOF'
+
+Remaining manual steps:
+  1. Raycast -> Settings -> Advanced -> Import Settings... (pick the .rayconfig from iCloud Drive)
+  2. Log out and back in for the HIToolbox (input source) changes to take effect.
+
+EOF

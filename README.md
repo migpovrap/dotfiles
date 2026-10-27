@@ -1,27 +1,25 @@
 # Miguel's dotFiles
 
 The repository contains the configuration files that I use in macOS, it's managed using chezmoi and some custom scripts, all of the private information and keys that are typically stored in this files are stored in 1Password using the integration provided by chezmoi.
-A cron job is used to keep brew updated and keep in sync with the formulas and casks that are listed in the Brewfile. The sricpts are used to automate the backup and restore of gpg keys, using 1Password cli, and encrypt and decrypt files stored in Google Drive or other non local storage.
+The sricpts are used to automate the backup and restore of gpg keys, using 1Password cli.
 
 
 ## Contents:
 
 - `setup.sh`: One line setup script to configure a new machine.
-- `backup.sh`: Script to backup GPG keys and app preferences, and save them to 1Password and iCloud.
-- `Brewfile`: List of Homebrew formulas and casks that I want to be installed.
+- `backup.sh`: Saves GPG keys and app preferences to 1Password.
+- `restore.sh`: Restores GPG keys and app preferences.
+- `Brewfile`: Homebrew formulae and casks (no App Store apps).
+- `Brewfile.mas`: App Store apps installed with `mas` after signing in.
 - `plists/`: Directory containing app preference files in plist format.
-- `home/`: Chezmoi home directory
-- `pinentry_op.sh`: Script to use 1Password to autofill the gpg key password.
-- `drive_gpg.py`: Python app to facilitate the use of GPG for encrypting sensitive files.
-- `importRaycast.sh`: Restore Raycast settings from iCloud.
-- `exportRaycast.sh`: Backup Raycast settings to iCloud.
+- `home/`: Chezmoi home directory.
+- `home/private_dot_local/executable_pinentry_op.sh`: gpg-agent pinentry backed by 1Password.
+- `home/private_Library/private_Keyboard Layouts/PT-PC.bundle`: custom Ukelele layout.
 
 - Config for:
   - Neovim
   - Tmux
-  - iTerm2
   - Alacritty
-  - Ghostty
   - bat
   - fzf
   - yazi
@@ -39,6 +37,22 @@ After all of this if you still want to use it, you should fork it and review all
 ```shell
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/migpovrap/dotfiles/main/setup.sh)"
 ```
+
+### After setup (manual)
+
+- **App Store:** sign in, then install the App Store apps:
+  ```shell
+  brew bundle --file="$HOME/.local/share/chezmoi/Brewfile.mas"
+  ```
+  They live outside `Brewfile` on purpose: `mas` fails without a signed-in account, and the setup
+  script runs with `set -e`, so one failure would abort everything after it.
+- **Keyboard layout:** `PT-PC.bundle` is deployed by chezmoi. Enable it once in
+  System Settings → Keyboard → Input Sources; the enabled list is captured by `backup.sh`
+  (`com.apple.HIToolbox`) and restored by `restore.sh`. Log out and back in after a restore.
+- **Raycast:** the app is installed, its settings are not. Import them from
+  Raycast → Settings → Advanced.
+- **Touch ID for sudo:** the setup script writes `/etc/pam.d/sudo_local` on macOS 14+; older
+  systems ignore that file, and the script warns instead.
 
 ## Keyboard shortcuts CheatSheet
 
@@ -130,10 +144,10 @@ After all of this if you still want to use it, you should fork it and review all
   | `d`              | Trash selected files |
   | `D`              | Permanently delete selected files |
   | `r`              | Rename selected file(s) |
-  | `s`              | Search files by content via ripgrep |
+  | `s`              | Search files by name (fd) |
+  | `S`              | Search file contents (ripgrep) |
   | `z`              | Jump to a directory via zoxide |
   | `Z`              | Jump to a file/directory via fzf |
-  | `f`              | Search the current directory using fzf(`f`) and ripgrep(`g`) |
 
   **Help**
   | Keybinding       | Action |

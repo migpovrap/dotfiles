@@ -16,18 +16,5 @@ scrolloff      = 5
 mouse_events   = [ "click", "scroll", "drag" ]
 title_format   = "Yazi: {cwd}"
 
-[plugin]
-previewers = [
-	{ name = "*/", run = "folder", sync = true },
-  { name = "*.md", run = "preview" },
-  { name = "*.csv", run = "preview" },
-  { mime = "text/*", run = "code" },
-  { mime = "*/xml", run = "code" },
-  { mime = "*/javascript", run = "code" },
-  { mime = "*/x-wine-extension-ini", run = "code" },
-  { name = "*", run = "preview" },
-	{ url = "*/", run = "folder" },
-]
-
 [input]
 cursor_blink = true

@@ -1,0 +1,6 @@
+# Yazi package lock file, read by `ya pkg install`.
+# `ya pkg` rewrites this file with rev/hash whenever install/upgrade runs.
+
+[[flavor.deps]]
+use = "BennyOe/onedark"
+rev = "668d71d"

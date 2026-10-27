@@ -1,0 +1,27 @@
+# Oh My Zsh plugins
+
+[".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
+    type = "git-repo"
+    url = "https://github.com/zsh-users/zsh-autosuggestions.git"
+    refreshPeriod = "168h"
+
+[".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
+    type = "git-repo"
+    url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+    refreshPeriod = "168h"
+
+[".oh-my-zsh/custom/plugins/zsh-bat"]
+    type = "git-repo"
+    url = "https://github.com/fdellwing/zsh-bat.git"
+    refreshPeriod = "168h"
+
+[".oh-my-zsh/custom/plugins/fzf-tab"]
+    type = "git-repo"
+    url = "https://github.com/Aloxaf/fzf-tab.git"
+    refreshPeriod = "168h"
+
+# Tmux Plugin Manager; `prefix + I` installs the plugins listed in ~/.tmux.conf
+[".tmux/plugins/tpm"]
+    type = "git-repo"
+    url = "https://github.com/tmux-plugins/tpm.git"
+    refreshPeriod = "168h"
