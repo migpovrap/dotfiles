@@ -1,7 +1,7 @@
 # Miguel's dotFiles
 
 The repository contains the configuration files that I use in macOS, it's managed using chezmoi and some custom scripts, all of the private information and keys that are typically stored in this files are stored in 1Password using the integration provided by chezmoi.
-The sricpts are used to automate the backup and restore of gpg keys, using 1Password cli.
+The scripts are used to automate the backup and restore of gpg keys, using 1Password cli.
 
 
 ## Contents:
